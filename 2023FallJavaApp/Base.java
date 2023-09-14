@@ -9,7 +9,10 @@ public class Base {
 		// Create a frame
         Frame frame = new Frame("My GUI");
         Button closeTester = new Button("Close Me!");
-
+        TextField tf = new TextField();
+        closeTester.setBounds(150, 100, 100, 50);
+        frame.add(closeTester);
+        
         // Create a label
         Label label = new Label("This is a label");
 
