@@ -1,17 +1,16 @@
 # JavaApp
 Fall 2023 CSCI 3033 Java app
 
-Project: TBD
-
-TODO: TBDlk;asjdf;lkasjdf ;lkajdsflk;jf;lkj2o[iqf jeopiqj fpoihjsdafli;jas
-alskdfj ;lkasdnf 
-;;alsdkfj ;lkasdfj l;
-
-asdkjfaslk;djf a;lk
-
-
 Authors:
-Elijah Atkins
-Alec Creasy
+Elijah Atkins,
+Nick Bridges,
+Alec Creasy,
 Chris Witt
-Nick Bridges
+
+Project: Brick Breaker Game
+-Classic Breakout/Brick Breaker style of game.
+
+TODO: 
+-Develop a GUI
+-Develop a basic level
+-Develop a scoreboard
