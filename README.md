@@ -13,3 +13,4 @@ Project: Brick Breaker Game
 TODO: 
 -Develop a GUI
 -Develop a basic level
+-Develop a scoreboard
