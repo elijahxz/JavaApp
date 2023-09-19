@@ -1,5 +1,8 @@
 import java.awt.*;
+import javax.swing.*;
 import java.awt.event.*;
+
+import javax.swing.JFrame;
 
 
 public class Base {
@@ -8,7 +11,7 @@ public class Base {
 		// TODO Auto-generated method stub
 		// Create a frame
         Frame frame = new Frame("My GUI");
-        Button closeTester = new Button("Close Me!");
+        Button closeTester = new Button("Click for Luck");
         TextField tf = new TextField();
         closeTester.setBounds(150, 100, 100, 50);
         frame.add(closeTester);
@@ -24,6 +27,12 @@ public class Base {
 
         // Display the frame
         frame.setVisible(true);
+        
+        frame.addWindowListener(new WindowAdapter() {
+        	public void windowClosing(WindowEvent e) {
+        		System.exit(0);
+        	}
+        });
         
         
     }
