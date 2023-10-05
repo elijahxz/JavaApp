@@ -1,2 +1,4 @@
 /.metadata/
 local.properties
+.gradle
+.idea
