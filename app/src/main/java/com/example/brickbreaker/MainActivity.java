@@ -1,11 +1,19 @@
 package com.example.brickbreaker;
 
 import androidx.appcompat.app.AppCompatActivity;
+<<<<<<< Updated upstream
+=======
+
+import android.content.Context;
+>>>>>>> Stashed changes
 import android.graphics.Color;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.graphics.*;
 
@@ -15,19 +23,21 @@ public class MainActivity extends AppCompatActivity {
     private GameView gameView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+<<<<<<< Updated upstream
         //super.onCreate(savedInstanceState;
+=======
+>>>>>>> Stashed changes
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //setContentView(new MyView(this));
         gameView = new GameView(this);
         //gameView = findViewById(R.id.gameView);
 
-        Button changeColor = new Button(this);
-        changeColor.setText("Color");
-        changeColor.setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
+        // This sets the game as full screen
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+<<<<<<< Updated upstream
         changeColor.setOnClickListener(new View.OnClickListener() {
             int[] colors = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW};
             @Override
@@ -37,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+=======
+        // This starts the game.
+        setContentView(new GamePanel(this));
+>>>>>>> Stashed changes
     }
 
     public void buttonClick(View view) {
