@@ -60,6 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
         // This starts the game.
         setContentView(new GamePanel(this));
-        //setContentView(R.layout.activity_main); Will eventually display a menu...
+        //setContentView(R.layout.activity_main); //Will eventually display a menu...
     }
 }
