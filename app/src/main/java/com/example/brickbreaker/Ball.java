@@ -64,4 +64,27 @@ public class Ball implements GameObject{
         x += ballSpeedX;
         y += ballSpeedY;
     }
+
+    public void update(Brick bricks[], int numBricks) {
+        int projX = x + ballSpeedX;
+        int projY = y + ballSpeedY;
+        for(int i= 0; i < numBricks; i++) {
+            if(bricks[i].getVisibility()) {
+                if(projX * radius >= bricks[i].column * bricks[i].width
+                        && projX <= bricks[i].column * bricks[i].width + bricks[i].width
+                        && projY <= bricks[i].row * bricks[i].height + bricks[i].height
+                        && projY >= bricks[i].row * bricks[i].height) {
+                    ballSpeedY = -ballSpeedY;
+                    bricks[i].setInvisible();
+
+                }
+            }
+        }
+    }
+
+
+
+    public int getRadius(){
+        return radius;
+    }
 }
