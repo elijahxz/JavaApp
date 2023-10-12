@@ -31,7 +31,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     Paint brickPaint = new Paint();
 
     Brick[] bricks = new Brick[30];
-    int numBricks = 0;
+    int numBricks = 14;
     int brokenBricks = 0;
 
     public GamePanel(Context context){
@@ -42,6 +42,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         GamePanel.screenHeight = displayMetrics.heightPixels;
         GamePanel.screenWidth = displayMetrics.widthPixels;
+        brickPaint.setColor(1);
+        createBricks();
 
         getHolder().addCallback(this);
 
@@ -121,34 +123,24 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         player.draw(canvas);
         mainBall.draw(canvas);
-        for (Brick brick : bricks) {
-            brick.draw(canvas);
+        for (int i = 0; i < numBricks; i ++) {
+            bricks[i].draw(canvas);
         }
 
 
-        //added
-        for(int i =0; i<numBricks;i++) {
-            if(bricks[i].getVisibility()){
-                canvas.drawRect(bricks[i].column * bricks[i].width + 1, bricks[i].row * bricks[i].height + 1, bricks[i].column * bricks[i].width + bricks[i].width -1, bricks[i].row * bricks[i].height + bricks[i].height -1,brickPaint);
-            }
-            for(int j=0; j<numBricks;j++) {
-                if(bricks[i].getVisibility()) {
-                    mainBall.update(bricks, numBricks);
-                }
-            }
-        }
     }
 
     //added
     private void createBricks() {
-        int brickWidth = 50/8;
-        int brickHeight = 50/16;
+        int brickWidth = 1600/16;
+        int brickHeight = 1600/16;
+        int counter = 0;
         for(int column = 0; column < 8; column++) {
-            for(int row= 0; row < 3; row++) {
-                bricks[numBricks] = new Brick(row, column, brickWidth, brickHeight);
+            for (int row = 0; row < 3; row++) {
+                bricks[counter] = new Brick(row, column, brickWidth, brickHeight);
+                counter++;
             }
         }
-
 
     }
 

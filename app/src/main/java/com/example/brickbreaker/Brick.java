@@ -31,7 +31,27 @@ public class Brick implements GameObject{
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setColor(BLACK);
-        canvas.drawRect(3,3,3, 3,paint);
+        int left = 20;
+        int right = width + 20;
+        int bottom = height + 20;
+        int top = 20;
+        if (column % 2 == 0)
+        {
+            right -= 10;
+        }
+        else
+        {
+            left += 10;
+        }
+        if (row % 2 == 0)
+        {
+            bottom -= 10;
+        }
+        else
+        {
+            top += 10;
+        }
+        canvas.drawRect(left + (width * column),top + (height*row), right + (width * column), bottom + (height*row),paint);
 
     }
 
