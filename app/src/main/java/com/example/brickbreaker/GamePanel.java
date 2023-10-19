@@ -119,6 +119,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     {
         super.draw(canvas);
 
+        Paint paint = new Paint();
+        paint.setColor(Color.argb(255,255,255,255));
+
         canvas.drawColor(Color.WHITE);
 
         player.draw(canvas);
@@ -126,6 +129,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         for (int i = 0; i < numBricks; i ++) {
             bricks[i].draw(canvas);
         }
+
+        int score = 0;
+        int lives = 3;
+
+        canvas.drawText("Score: " + score + "   Lives: " + lives, 10, 50, paint);
 
 
     }
