@@ -70,13 +70,13 @@ public class Ball implements GameObject{
         int projY = y + ballSpeedY;
         for(int i= 0; i < numBricks; i++) {
             if(bricks[i].getVisibility()) {
-                if(projX * radius >= bricks[i].column * bricks[i].width
-                        && projX <= bricks[i].column * bricks[i].width + bricks[i].width
-                        && projY <= bricks[i].row * bricks[i].height + bricks[i].height
-                        && projY >= bricks[i].row * bricks[i].height) {
+                if(projX + radius >= bricks[i].getLeft() || projX - radius >= bricks[i].getRight()) {
+                    ballSpeedX = -ballSpeedX;
+                    bricks[i].setInvisible();
+                }
+                if(projY + radius >= bricks[i].getTop() || projY - radius >= bricks[i].getBottom()) {
                     ballSpeedY = -ballSpeedY;
                     bricks[i].setInvisible();
-
                 }
             }
         }

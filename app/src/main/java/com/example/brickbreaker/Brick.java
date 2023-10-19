@@ -9,6 +9,7 @@ public class Brick implements GameObject{
 
     private boolean isVisible;
     public int row, column, width, height;
+    private int left = 0, top  = 0, right, bottom;
 
     public Brick(int row, int column, int width, int height) {
         isVisible = true;
@@ -30,10 +31,6 @@ public class Brick implements GameObject{
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setColor(BLACK);
-        int left = 0;
-        int right;
-        int top = 0;
-        int bottom;
 
         left = 40 + (20 * column) + (width * column);
         top = 40 + (20 * row) + (height  * row);
@@ -46,6 +43,19 @@ public class Brick implements GameObject{
                         (bottom),
                         paint);
 
+    }
+
+    public int getTop() {
+        return this.top;
+    }
+    public int getBottom() {
+        return this.bottom;
+    }
+    public int getLeft() {
+        return this.left;
+    }
+    public int getRight() {
+        return this.right;
     }
 
     @Override
