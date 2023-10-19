@@ -31,7 +31,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     Paint brickPaint = new Paint();
 
     Brick[] bricks = new Brick[30];
-    int numBricks = 14;
+    int numBricks = 18;
     int brokenBricks = 0;
 
     public GamePanel(Context context){
@@ -140,7 +140,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     //added
     private void createBricks() {
-        int brickWidth = 1600/16;
+        int brickWidth = 2400/16;
         int brickHeight = 1600/16;
         int counter = 0;
         for(int column = 0; column < 8; column++) {
