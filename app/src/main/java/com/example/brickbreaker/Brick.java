@@ -38,10 +38,10 @@ public class Brick implements GameObject{
         bottom = top + height;
 
         canvas.drawRect((left),
-                        (top),
-                        (right),
-                        (bottom),
-                        paint);
+                (top),
+                (right),
+                (bottom),
+                paint);
 
     }
 
