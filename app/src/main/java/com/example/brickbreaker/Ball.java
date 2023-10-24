@@ -76,7 +76,7 @@ public class Ball implements GameObject{
                     if(projX >= bricks[i].getLeft() && projX < bricks[i].getRight()) {
                         ballSpeedX = -ballSpeedX;
                     }
-                    if (projY >= bricks[i].getTop() && projY <= bricks[i].getBottom()){
+                    else if (projY >= bricks[i].getTop() && projY <= bricks[i].getBottom()){
                         ballSpeedY = -ballSpeedY;
                     }
                     bricks[i].setInvisible();
