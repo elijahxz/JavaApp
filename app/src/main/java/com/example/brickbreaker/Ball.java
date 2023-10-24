@@ -7,8 +7,8 @@ import android.graphics.Paint;
 public class Ball implements GameObject{
     private int radius;
     private int color;
-    private int x = 400;
-    private int y = 400;
+    private int x = 800;
+    private int y = 800;
     private int ballSpeedX = 20;
     private int ballSpeedY = -20;
     public Ball(int radius, int color)
@@ -68,17 +68,21 @@ public class Ball implements GameObject{
     public void update(Brick bricks[], int numBricks) {
         int projX = x + ballSpeedX;
         int projY = y + ballSpeedY;
-        for(int i= 0; i < numBricks; i++) {
-            if(bricks[i].getVisibility()) {
-                if(projX + radius >= bricks[i].getLeft() || projX - radius >= bricks[i].getRight()) {
-                    ballSpeedX = -ballSpeedX;
+        for(int i = 0; i < numBricks; i++) {
+            //if(bricks[i].getVisibility()) {
+                if(projX >= bricks[i].getLeft() && projX < bricks[i].getRight() &&
+                        projY >= bricks[i].getTop() && projY <= bricks[i].getBottom()) {
+
+                    if(projX >= bricks[i].getLeft() && projX < bricks[i].getRight()) {
+                        ballSpeedX = -ballSpeedX;
+                    }
+                    if (projY >= bricks[i].getTop() && projY <= bricks[i].getBottom()){
+                        ballSpeedY = -ballSpeedY;
+                    }
                     bricks[i].setInvisible();
+                    break;
                 }
-                if(projY + radius >= bricks[i].getTop() || projY - radius >= bricks[i].getBottom()) {
-                    ballSpeedY = -ballSpeedY;
-                    bricks[i].setInvisible();
-                }
-            }
+           //}
         }
     }
 

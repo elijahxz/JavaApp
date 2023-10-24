@@ -29,9 +29,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     //bricks
 
     Paint brickPaint = new Paint();
-
-    Brick[] bricks = new Brick[30];
     int numBricks = 18;
+    Brick[] bricks = new Brick[numBricks];
     int brokenBricks = 0;
 
     public GamePanel(Context context){
@@ -134,8 +133,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         int lives = 3;
 
         canvas.drawText("Score: " + score + "   Lives: " + lives, 10, 50, paint);
-
-
     }
 
     //added
@@ -143,7 +140,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         int brickWidth = 2400/16;
         int brickHeight = 1600/16;
         int counter = 0;
-        for(int column = 0; column < 8; column++) {
+        for(int column = 0; column < 6; column++) {
             for (int row = 0; row < 3; row++) {
                 bricks[counter] = new Brick(row, column, brickWidth, brickHeight);
                 counter++;
