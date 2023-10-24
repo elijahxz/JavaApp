@@ -7,7 +7,7 @@ import android.graphics.Paint;
 
 public class Brick implements GameObject{
 
-    private boolean isVisible;
+    private boolean isVisible = true;
     public int row, column, width, height;
     private int left = 0, top  = 0, right, bottom;
 
@@ -29,6 +29,10 @@ public class Brick implements GameObject{
 
     @Override
     public void draw(Canvas canvas) {
+        if (isVisible == false)
+        {
+            return;
+        }
         Paint paint = new Paint();
         paint.setColor(BLACK);
 

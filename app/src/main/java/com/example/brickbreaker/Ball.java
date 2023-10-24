@@ -69,7 +69,7 @@ public class Ball implements GameObject{
         int projX = x + ballSpeedX;
         int projY = y + ballSpeedY;
         for(int i = 0; i < numBricks; i++) {
-            //if(bricks[i].getVisibility()) {
+            if(bricks[i].getVisibility()) {
                 if(projX >= bricks[i].getLeft() && projX < bricks[i].getRight() &&
                         projY >= bricks[i].getTop() && projY <= bricks[i].getBottom()) {
 
@@ -82,7 +82,7 @@ public class Ball implements GameObject{
                     bricks[i].setInvisible();
                     break;
                 }
-           //}
+           }
         }
     }
 
