@@ -3,6 +3,7 @@ package com.example.brickbreaker;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.media.MediaPlayer;
 
 public class Ball implements GameObject{
     private int radius;
@@ -79,6 +80,8 @@ public class Ball implements GameObject{
                     else if (projY >= bricks[i].getTop() && projY <= bricks[i].getBottom()){
                         ballSpeedY = -ballSpeedY;
                     }
+                    //Will eventually play a 'beep' sound.
+                    //MediaPlayer mp = MediaPlayer.create(context, R.sounds.8-bit-kit-beep.wav)
                     pScore.addScore(); //If brick touched add 10 points.
                     bricks[i].setInvisible();
                     break;

@@ -19,9 +19,6 @@ public class Score {
         score = 0;
         lives = 3;
     }
-    public void update(){
-        this.addScore();
-    }
     public int getScore(){
         return score;
     }

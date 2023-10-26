@@ -112,7 +112,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         player.update(playerPoint);
         mainBall.update(player);
         mainBall.update(bricks,numBricks, playerScore);
-        //playerScore.update();
     }
 
     @Override
