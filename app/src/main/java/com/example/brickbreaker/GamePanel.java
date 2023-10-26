@@ -21,6 +21,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private RectPlayer player;
     private Ball mainBall;
     private Point playerPoint;
+    private Score playerScore = new Score();
     public static int screenHeight = 0;
     public static int screenWidth = 0;
     public static final int playerWidth = 400;
@@ -110,7 +111,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     {
         player.update(playerPoint);
         mainBall.update(player);
-        mainBall.update(bricks,numBricks);
+        mainBall.update(bricks,numBricks, playerScore);
+        //playerScore.update();
     }
 
     @Override
@@ -133,7 +135,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         int score = 0;
         int lives = 3;
 
-        canvas.drawText("Score: " + score + "   Lives: " + lives, 10, 50, paint);
+        canvas.drawText("Score: " + playerScore.getScore() + "   Lives: " + playerScore.getLives(), 10, 50, paint);
 //<<<<<<< HEAD
 //=======
 //

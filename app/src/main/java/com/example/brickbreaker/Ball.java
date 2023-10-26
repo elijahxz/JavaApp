@@ -65,7 +65,7 @@ public class Ball implements GameObject{
         y += ballSpeedY;
     }
 
-    public void update(Brick bricks[], int numBricks) {
+    public void update(Brick bricks[], int numBricks, Score pScore) {
         int projX = x + ballSpeedX;
         int projY = y + ballSpeedY;
         for(int i = 0; i < numBricks; i++) {
@@ -79,6 +79,7 @@ public class Ball implements GameObject{
                     else if (projY >= bricks[i].getTop() && projY <= bricks[i].getBottom()){
                         ballSpeedY = -ballSpeedY;
                     }
+                    pScore.addScore(); //If brick touched add 10 points.
                     bricks[i].setInvisible();
                     break;
                 }
