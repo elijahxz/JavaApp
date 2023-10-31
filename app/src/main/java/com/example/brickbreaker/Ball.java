@@ -30,7 +30,7 @@ public class Ball implements GameObject{
 
     }
 
-    public void update(RectPlayer player)
+    public void update(RectPlayer player, MainThread thread)
     {
         int left = player.getLeftSide();
         int right = player.getRightSide();
@@ -52,7 +52,9 @@ public class Ball implements GameObject{
         }
         else if (projY > GamePanel.screenHeight)
         {
-            ballSpeedY = -ballSpeedY;
+            //ballSpeedY = -ballSpeedY;
+            thread.setRunning(false);
+            
         }
         else if (projY < 0)
         {
