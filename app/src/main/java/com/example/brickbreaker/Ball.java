@@ -66,7 +66,7 @@ public class Ball implements GameObject{
         y += ballSpeedY;
     }
 
-    public void update(Brick bricks[], int numBricks) {
+    public void update(Brick bricks[], int numBricks, Score score) {
         int bLeft = x - radius;
         int bRight = x + radius;
         int bTop = y - radius;
@@ -77,18 +77,21 @@ public class Ball implements GameObject{
                 if (bRight >= bricks[i].getLeft() && bRight <= bricks[i].getRight() &&
                         y >= bricks[i].getTop() && y <= bricks[i].getBottom()) {
                     ballSpeedX = -ballSpeedX;
+                    score.addScore();
                     bricks[i].setInvisible();
                     break;
 
                 } else if (bLeft >= bricks[i].getLeft() && bLeft <= bricks[i].getRight() &&
                         y >= bricks[i].getTop() && y <= bricks[i].getBottom()) {
                     ballSpeedX = -ballSpeedX;
+                    score.addScore();
                     bricks[i].setInvisible();
                     break;
 
                 } else if (x >= bricks[i].getLeft() && x <= bricks[i].getRight() &&
                         bTop >= bricks[i].getTop() && bTop <= bricks[i].getBottom()) {
                     ballSpeedY = -ballSpeedY;
+                    score.addScore();
                     bricks[i].setInvisible();
                     break;
 
@@ -96,6 +99,7 @@ public class Ball implements GameObject{
                         bBottom >= bricks[i].getTop() && bBottom <= bricks[i].getBottom()) {
                     ballSpeedY = -ballSpeedY;
                     bricks[i].setInvisible();
+                    score.addScore();
                     break;
 
                 }
