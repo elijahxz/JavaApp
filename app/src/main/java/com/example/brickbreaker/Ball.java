@@ -66,27 +66,40 @@ public class Ball implements GameObject{
         y += ballSpeedY;
     }
 
-    public void update(Brick bricks[], int numBricks, Score pScore) {
-        int projX = x + ballSpeedX;
-        int projY = y + ballSpeedY;
-        for(int i = 0; i < numBricks; i++) {
-            if(bricks[i].getVisibility()) {
-                if(projX >= bricks[i].getLeft() && projX < bricks[i].getRight() &&
-                        projY >= bricks[i].getTop() && projY <= bricks[i].getBottom()) {
+    public void update(Brick bricks[], int numBricks) {
+        int bLeft = x - radius;
+        int bRight = x + radius;
+        int bTop = y - radius;
+        int bBottom = y + radius;
 
-                    if(projX >= bricks[i].getLeft() && projX < bricks[i].getRight()) {
-                        ballSpeedX = -ballSpeedX;
-                    }
-                    else if (projY >= bricks[i].getTop() && projY <= bricks[i].getBottom()){
-                        ballSpeedY = -ballSpeedY;
-                    }
-                    //Will eventually play a 'beep' sound.
-                    //MediaPlayer mp = MediaPlayer.create(context, R.sounds.8-bit-kit-beep.wav)
-                    pScore.addScore(); //If brick touched add 10 points.
+        for (int i = 0; i < numBricks; i++) {
+            if (bricks[i].getVisibility()) {
+                if (bRight >= bricks[i].getLeft() && bRight <= bricks[i].getRight() &&
+                        y >= bricks[i].getTop() && y <= bricks[i].getBottom()) {
+                    ballSpeedX = -ballSpeedX;
                     bricks[i].setInvisible();
                     break;
+
+                } else if (bLeft >= bricks[i].getLeft() && bLeft <= bricks[i].getRight() &&
+                        y >= bricks[i].getTop() && y <= bricks[i].getBottom()) {
+                    ballSpeedX = -ballSpeedX;
+                    bricks[i].setInvisible();
+                    break;
+
+                } else if (x >= bricks[i].getLeft() && x <= bricks[i].getRight() &&
+                        bTop >= bricks[i].getTop() && bTop <= bricks[i].getBottom()) {
+                    ballSpeedY = -ballSpeedY;
+                    bricks[i].setInvisible();
+                    break;
+
+                } else if (x >= bricks[i].getLeft() && x <= bricks[i].getRight() &&
+                        bBottom >= bricks[i].getTop() && bBottom <= bricks[i].getBottom()) {
+                    ballSpeedY = -ballSpeedY;
+                    bricks[i].setInvisible();
+                    break;
+
                 }
-           }
+            }
         }
     }
 
