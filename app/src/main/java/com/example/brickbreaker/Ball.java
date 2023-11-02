@@ -36,31 +36,41 @@ public class Ball implements GameObject{
         int right = player.getRightSide();
         int bottom = player.getBottomSide();
         int top = player.getTopSide();
-        int projX = x + ballSpeedX;
-        int projY = y + ballSpeedY;
+        int bTop = y - radius;
+        int bBottom = y + radius;
+        int bRight = x + radius;
+        int bLeft = x - radius;
 
         // A hit on the paddle
-        if (projX > left && projX < right && projY < top && projY > bottom)
+        if (bBottom > top && x > left && x < right)
         {
             ballSpeedY = -ballSpeedY;
+            if (!(ballSpeedX > 40 || ballSpeedX < -40)) {
+                ballSpeedX *= 1.1;
+                ballSpeedX *= 1.1;
+            }
+            if (!(ballSpeedY > 40 || ballSpeedY < -40)) {
+                ballSpeedY *= 1.1;
+                ballSpeedY *= 1.1;
+            }
         }
 
         // Checks to see if the ball is interacting with the screen.
-        if (projX > GamePanel.screenWidth)
+        if (bRight > GamePanel.screenWidth)
         {
             ballSpeedX = -ballSpeedX;
         }
-        else if (projY > GamePanel.screenHeight)
+        if (bBottom > GamePanel.screenHeight)
         {
-            //ballSpeedY = -ballSpeedY;
+            ballSpeedY = -ballSpeedY;
             thread.setRunning(false);
-            
+
         }
-        else if (projY < 0)
+        if (bTop < 0)
         {
             ballSpeedY = -ballSpeedY;
         }
-        else if (projX < 0){
+        if (bLeft < 0){
             ballSpeedX = -ballSpeedX;
         }
 

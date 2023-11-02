@@ -138,7 +138,7 @@ public class RectPlayer implements GameObject{
      */
     public int getTopSide()
     {
-        return this.PLAYER_LOCK_Y + (playerHeight/2);
+        return this.PLAYER_LOCK_Y - (playerHeight/2);
     }
     /*
      * Gets the bottom border of the paddle (Y coord)
