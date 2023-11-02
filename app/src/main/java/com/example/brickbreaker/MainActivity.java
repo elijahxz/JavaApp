@@ -59,8 +59,26 @@ public class MainActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         // This starts the game.
+
+        setContentView(R.layout.activity_main); //Will eventually display a menu...
+
+
+
+
+
+        final Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+               goToGame();
+            }
+        });
+
+
+        //setContentView(new MainMenu(this));
         //setContentView(new GamePanel(this));
-        //setContentView(R.layout.activity_main); //Will eventually display a menu...
+    }
+
+    public void goToGame() {
         setContentView(new GamePanel(this));
     }
 }

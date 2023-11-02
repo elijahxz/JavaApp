@@ -1,5 +1,4 @@
 package com.example.brickbreaker;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -66,6 +65,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated(SurfaceHolder holder)
     {
         thread = new MainThread(getHolder(), this);
+
+
 
         thread.setRunning(true);
         thread.start();

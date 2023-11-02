@@ -8,10 +8,10 @@ import android.media.MediaPlayer;
 public class Ball implements GameObject{
     private int radius;
     private int color;
-    private int x = 800;
-    private int y = 800;
+    private int x = (int) (Math.random() * (800 - 400)) + 400;
+    private int y = 1000;
     private int ballSpeedX = 20;
-    private int ballSpeedY = -20;
+    private int ballSpeedY = 20;
     public Ball(int radius, int color)
     {
         this.radius = radius;
@@ -64,7 +64,6 @@ public class Ball implements GameObject{
         {
             ballSpeedY = -ballSpeedY;
             thread.setRunning(false);
-
         }
         if (bTop < 0)
         {

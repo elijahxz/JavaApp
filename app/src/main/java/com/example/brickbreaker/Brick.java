@@ -37,7 +37,7 @@ public class Brick implements GameObject{
         paint.setColor(BLACK);
 
         left = 40 + (20 * column) + (width * column);
-        top = 40 + (20 * row) + (height  * row);
+        top = 70 + (20 * row) + (height  * row);
         right = left + width;
         bottom = top + height;
 

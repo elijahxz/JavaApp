@@ -29,6 +29,7 @@ public class MainThread extends Thread {
         this.gamePanel = gamePanel;
 
     }
+
     @Override
     public void run()
     {
