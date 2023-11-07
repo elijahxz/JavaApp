@@ -30,8 +30,7 @@ public class Ball implements GameObject{
 
     }
 
-    public void update(RectPlayer player, MainThread thread)
-    {
+    public void update(RectPlayer player, MainThread thread, Score score) throws InterruptedException {
         int left = player.getLeftSide();
         int right = player.getRightSide();
         int bottom = player.getBottomSide();
@@ -63,7 +62,18 @@ public class Ball implements GameObject{
         if (bBottom > GamePanel.screenHeight)
         {
             ballSpeedY = -ballSpeedY;
-            thread.setRunning(false);
+            //thread.setRunning(false);
+            score.lostLife();
+            if(score.getLives() == 0){
+                thread.setRunning(false);
+            }
+            else{
+                try{
+                    thread.sleep(3000);
+                }catch(Exception e){e.printStackTrace();}
+                x = (int) (Math.random() * (800 - 400)) + 400;
+                y = 1000;
+            }
         }
         if (bTop < 0)
         {

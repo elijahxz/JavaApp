@@ -12,8 +12,13 @@ public class Score {
         score += 10;
     }
     public void lostLife() {
-        score -= 5;
-        lives -= 0;
+        if(score < 5){
+            score = 0;
+        }
+        else {
+            score -= 5;
+        }
+        lives -= 1;
     }
     public void reset(){
         score = 0;

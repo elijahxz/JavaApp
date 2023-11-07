@@ -108,10 +108,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         return true;
         //return super.onTouchEvent(event);
     }
-    public void update()
-    {
+    public void update() throws InterruptedException {
         player.update(playerPoint);
-        mainBall.update(player, thread);
+        mainBall.update(player, thread, playerScore);
         mainBall.update(bricks,numBricks, playerScore);
     }
 
