@@ -33,7 +33,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     Brick[] bricks = new Brick[numBricks];
     int brokenBricks = 0;
 
-    public GamePanel(Context context){
+    MainActivity game;
+
+    public GamePanel(Context context, MainActivity game){
         super(context);
 
         // Gets the dimensions of the screen
@@ -55,6 +57,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         playerPoint = player.setPoint(this.screenHeight, this.screenWidth);
 
         setFocusable(true);
+
+        this.game = game;
     }
 
     @Override

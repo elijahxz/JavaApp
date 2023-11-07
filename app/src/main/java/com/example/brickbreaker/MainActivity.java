@@ -79,6 +79,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToGame() {
-        setContentView(new GamePanel(this));
+        setContentView(new GamePanel(this, this));
     }
 }
