@@ -1,4 +1,7 @@
 package com.example.brickbreaker;
+import static android.graphics.Color.BLACK;
+import static android.graphics.Color.BLUE;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -6,10 +9,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 /*
 *   This class is where all of the fun stuff happens!
@@ -25,6 +32,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public static int screenWidth = 0;
     public static final int playerWidth = 400;
     public static final int playerHeight = 40;
+
+    //private Button button2;
 
     //bricks
 
@@ -55,6 +64,20 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         playerPoint = player.setPoint(this.screenHeight, this.screenWidth);
 
         setFocusable(true);
+
+//        Button button2 = new Button(this.getContext()); // "this" refers to the current Activity's context
+//        button2.setText("Exit");
+//
+//        // Set button properties
+//        button2.setX(400.0F);
+//        button2.setY(50.0F);
+//        button2.setTextColor(BLUE);
+//
+//        button2.setOnClickListener(new OnClickListener() {
+//            public void onClick(View v) {
+//                System.exit(0);
+//            }
+//        });
     }
 
     @Override
@@ -135,12 +158,18 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         int lives = 3;
 
         canvas.drawText("Score: " + playerScore.getScore() + "   Lives: " + playerScore.getLives(), 10, 50, paint);
+
+        //button2.draw(canvas);
+
 //<<<<<<< HEAD
 //=======
 //
 //
 //
 //>>>>>>> 5f979daf4b3cab8c90df3d67a8cb4b0839aadc2b
+    }
+
+    private void addContentView(Button button2, ViewGroup.LayoutParams layoutParams) {
     }
 
     //added

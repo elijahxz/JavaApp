@@ -71,6 +71,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                goToGame();
             }
+
+        });
+
+
+        final Button button2 = findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                System.exit(0);
+            }
+
         });
 
 
