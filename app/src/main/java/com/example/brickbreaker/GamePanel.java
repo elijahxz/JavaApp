@@ -1,6 +1,7 @@
 package com.example.brickbreaker;
 import static android.graphics.Color.BLACK;
 import static android.graphics.Color.BLUE;
+import static android.graphics.Color.RED;
 
 import android.app.Activity;
 import android.content.Context;
@@ -33,7 +34,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public static final int playerWidth = 400;
     public static final int playerHeight = 40;
 
-    //private Button button2;
+    boolean pause = true;
+
+    //private RectMenu rect;
+    public Rect rec;
+
+    public Button button2;
 
     //bricks
 
@@ -65,24 +71,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         playerPoint = player.setPoint(this.screenHeight, this.screenWidth);
 
+        Button button2 = new Button(context);
+
         setFocusable(true);
 
+        rec = new Rect(screenWidth-100,0,screenWidth,100);
+
 //<<<<<<< HEAD
-//        Button button2 = new Button(this.getContext()); // "this" refers to the current Activity's context
-//        button2.setText("Exit");
 //
-//        // Set button properties
-//        button2.setX(400.0F);
-//        button2.setY(50.0F);
-//        button2.setTextColor(BLUE);
-//
-//        button2.setOnClickListener(new OnClickListener() {
-//            public void onClick(View v) {
-//                System.exit(0);
-//            }
-//        });
-//=======
-//        this.game = game;
 //>>>>>>> c1fae7480fe842b8525d6d7903729b80a2a7ddf0
     }
 
@@ -120,6 +116,20 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
+
+        float x = event.getX();
+        float y = event.getY();
+        if(x > screenWidth-100 && y < 100) {
+            if(pause == true) {
+                pause = false;
+                thread.setRunning(true);
+
+            } else {
+                pause = true;
+                thread.setRunning(false);
+            }
+
+        }
         switch (event.getAction())
         {
             case MotionEvent.ACTION_DOWN:
@@ -164,8 +174,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         int lives = 3;
 
         canvas.drawText("Score: " + playerScore.getScore() + "   Lives: " + playerScore.getLives(), 10, 50, paint);
+        //Button button2 = new Button(this.getContext()); // "this" refers to the current Activity's context
 
-        //button2.draw(canvas);
+        paint = new Paint();
+        paint.setColor(RED);
+
+
+
+        canvas.drawRect(rec, paint);
 
 //<<<<<<< HEAD
 //=======
