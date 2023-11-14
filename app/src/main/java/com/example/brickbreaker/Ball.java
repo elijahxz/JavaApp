@@ -13,6 +13,22 @@ public class Ball implements GameObject{
     private int ballSpeedX = 20;
     private int ballSpeedY = 20;
 
+
+    public int ballSpeedX2 = 0;
+    public int ballSpeedY2 = 0;
+
+    public void GetSpeed() {
+        ballSpeedX2 = ballSpeedX;
+        ballSpeedY2 = ballSpeedY;
+        ballSpeedX = 0;
+        ballSpeedY = 0;
+    }
+
+    public void SetSpeed() {
+        ballSpeedX = ballSpeedX2;
+        ballSpeedY = ballSpeedY2;
+    }
+
     public Ball(int radius, int color)
     {
         this.radius = radius;

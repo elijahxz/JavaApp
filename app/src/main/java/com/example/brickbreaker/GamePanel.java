@@ -35,6 +35,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public static final int playerHeight = 40;
 
     boolean pause = true;
+    boolean pause2 = true;
 
     //private RectMenu rect;
     public Rect rec;
@@ -117,23 +118,44 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event)
     {
 
+
         float x = event.getX();
         float y = event.getY();
-        if(x > screenWidth-100 && y < 100) {
-            if(pause == true) {
-                pause = false;
-                thread.setRunning(true);
 
-            } else {
-                pause = true;
-                thread.setRunning(false);
-            }
+//        if(pause2 == false && x > screenWidth-100 && y < 100) {
+//            pause = true;
+//            mainBall.SetSpeed();
+//        }
+//        if(x > screenWidth-100 && y < 100) {
+//            if(pause == true) {
+//                mainBall.GetSpeed();
+//                pause = false;
+//                pause2= false;
+//
+//            } else if(pause2 == false && x > screenWidth-100 && y < 100) {
+//                pause = true;
+//                pause2 = true;
+//                mainBall.SetSpeed();
+//            }
 
-        }
+
         switch (event.getAction())
         {
             case MotionEvent.ACTION_DOWN:
                 player.touchWrapper(event, playerPoint, 0);
+                if(x > screenWidth-100 && y < 100) {
+                    if(pause == true) {
+                        mainBall.GetSpeed();
+                        pause = false;
+                        pause2= false;
+
+                    } else if(pause2 == false && x > screenWidth-100 && y < 100) {
+                        pause = true;
+                        pause2 = true;
+                        mainBall.SetSpeed();
+                    }
+
+                }
                 break;
             case MotionEvent.ACTION_MOVE:
                 player.touchWrapper(event, playerPoint, 1);
