@@ -82,6 +82,7 @@ public class RectPlayer implements GameObject{
             point.x = rectangle.width()/2;
         }
         // This should not change
+        // This sets the paddles length and height around the point x and y
         rectangle.set(point.x - rectangle.width()/2,
                       PLAYER_LOCK_Y - rectangle.height()/2,
                 point.x + rectangle.width()/2,
@@ -145,7 +146,7 @@ public class RectPlayer implements GameObject{
      */
     public int getBottomSide()
     {
-        return this.PLAYER_LOCK_Y - (playerHeight/2);
+        return this.PLAYER_LOCK_Y + (playerHeight/2);
     }
     /*
      * Sets whether the player is currently touching the paddle

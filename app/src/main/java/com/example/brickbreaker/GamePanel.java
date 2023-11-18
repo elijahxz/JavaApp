@@ -33,16 +33,14 @@ public class GamePanel extends View {
 
     Handler handler;
     Runnable runnable;
-    final long UPDATE_MILLIS = 30;
+    private final long UPDATE_MILLIS = 30;
+    public final int MARGIN = 65;
     public static int screenHeight = 0;
     public static int screenWidth = 0;
-    public static final int playerWidth = 400;
+    public static final int playerWidth = 250;
     public static final int playerHeight = 40;
-
     boolean pause = true;
-    boolean pause2 = true;
-
-    public Rect rec;
+    public Rect pauseButton;
 
     Paint brickPaint = new Paint();
     int numBricks = 18;
@@ -52,7 +50,9 @@ public class GamePanel extends View {
 
     public GamePanel(Context context, MainActivity game){
         super(context);
+
         this.game = game;
+
         handler = new Handler();
         runnable = new Runnable()
         {
@@ -75,15 +75,13 @@ public class GamePanel extends View {
 
         player = new RectPlayer(new Rect(0, 0, this.playerWidth, this.playerHeight), Color.rgb(255,0,0));
 
-        mainBall = new Ball(50, Color.rgb(255,0,0));
+        mainBall = new Ball(50, Color.rgb(255,0,0), this);
 
         playerPoint = player.setPoint(this.screenHeight, this.screenWidth);
 
         setFocusable(true);
 
-        rec = new Rect(screenWidth-100,0,screenWidth,100);
-
-        update();
+        pauseButton = new Rect(screenWidth-100,0,screenWidth,60);
     }
 
     @Override
@@ -95,22 +93,24 @@ public class GamePanel extends View {
         switch (event.getAction())
         {
             case MotionEvent.ACTION_DOWN:
+                // this calls the movement for the paddle
                 player.touchWrapper(event, playerPoint, 0);
-                if(x > screenWidth-100 && y < 100) {
+
+                // This works the pause menu
+                if(x > pauseButton.left && y < pauseButton.bottom) {
                     if(pause == true) {
                         mainBall.GetSpeed();
                         pause = false;
-                        pause2= false;
 
-                    } else if(pause2 == false && x > screenWidth-100 && y < 100) {
+                    }
+                    else if(pause == false && x > pauseButton.left && y < pauseButton.bottom) {
                         pause = true;
-                        pause2 = true;
                         mainBall.SetSpeed();
                     }
-
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
+                //This calls the movement for the paddle
                 player.touchWrapper(event, playerPoint, 1);
                 break;
             case MotionEvent.ACTION_UP:
@@ -153,9 +153,7 @@ public class GamePanel extends View {
         paint = new Paint();
         paint.setColor(RED);
 
-
-
-        canvas.drawRect(rec, paint);
+        canvas.drawRect(pauseButton, paint);
         handler.postDelayed(runnable, UPDATE_MILLIS);
     }
 
@@ -173,6 +171,7 @@ public class GamePanel extends View {
                 counter++;
             }
         }
+        Brick.numBricks = numBricks;
 
     }
 

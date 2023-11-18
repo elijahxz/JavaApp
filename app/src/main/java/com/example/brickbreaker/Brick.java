@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 public class Brick implements GameObject{
-
+    public static int numBricks = 0;
     private boolean isVisible = true;
     public int row, column, width, height;
     private int left = 0, top  = 0, right, bottom;
@@ -19,8 +19,10 @@ public class Brick implements GameObject{
         this.height = height;
     }
 
-    public void setInvisible() {
+    public void setInvisible()
+    {
         isVisible = false;
+        Brick.numBricks --;
     }
 
     public boolean getVisibility() {

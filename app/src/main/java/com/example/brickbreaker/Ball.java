@@ -9,15 +9,16 @@ import android.os.SystemClock;
 public class Ball implements GameObject{
     private int radius;
     private int color;
+    private GamePanel game;
     private int x = (int) (Math.random() * (800 - 400)) + 400;
     private int y = 1000;
     private int ballSpeedX = 20;
     private int ballSpeedY = 20;
-
-
+    private int paddleUpdated = 0;
     public int ballSpeedX2 = 0;
     public int ballSpeedY2 = 0;
 
+    // Used for pause button
     public void GetSpeed() {
         ballSpeedX2 = ballSpeedX;
         ballSpeedY2 = ballSpeedY;
@@ -25,16 +26,19 @@ public class Ball implements GameObject{
         ballSpeedY = 0;
     }
 
+    // Used for pause button
     public void SetSpeed() {
         ballSpeedX = ballSpeedX2;
         ballSpeedY = ballSpeedY2;
     }
 
-    public Ball(int radius, int color)
+    public Ball(int radius, int color, GamePanel game)
     {
         this.radius = radius;
         this.color = color;
+        this.game = game;
     }
+
     @Override
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
@@ -57,21 +61,37 @@ public class Ball implements GameObject{
         int bBottom = y + radius;
         int bRight = x + radius;
         int bLeft = x - radius;
-
-        // A hit on the paddle
-        if (bBottom > top && x > left && x < right)
+        if (paddleUpdated != 0)
         {
-            ballSpeedY = -ballSpeedY;
-            if (!(ballSpeedX > 40 || ballSpeedX < -40)) {
-                ballSpeedX *= 1.1;
-                ballSpeedX *= 1.1;
-            }
-            if (!(ballSpeedY > 40 || ballSpeedY < -40)) {
-                ballSpeedY *= 1.1;
-                ballSpeedY *= 1.1;
+            paddleUpdated --;
+        }
+        else {
+            // A hit on the paddle
+            if (bRight - (radius * .6) >= left && bRight - (radius * .6) <= left + 20 && bBottom > top && bBottom < bottom) {
+                if (ballSpeedX > 0) {
+                    ballSpeedX = -ballSpeedX;
+                }
+                ballSpeedY = -ballSpeedY;
+                paddleUpdated = 10;
+            } else if (bLeft + (radius * .6) >= right && bLeft + (radius * .6) <= right + 20 && bBottom > top && bBottom < bottom) {
+                if (ballSpeedX < 0) {
+                    ballSpeedX = -ballSpeedX;
+                }
+                ballSpeedY = -ballSpeedY;
+                paddleUpdated = 10;
+            } else if (bBottom > top && bBottom < bottom && x > left && x < right) {
+                ballSpeedY = -ballSpeedY;
+                if (!(ballSpeedX > 40 || ballSpeedX < -40)) {
+                    ballSpeedX *= 1.1;
+                    ballSpeedX *= 1.1;
+                }
+                if (!(ballSpeedY > 40 || ballSpeedY < -40)) {
+                    ballSpeedY *= 1.1;
+                    ballSpeedY *= 1.1;
+                }
+                paddleUpdated = 10;
             }
         }
-
         // Checks to see if the ball is interacting with the screen.
         if (bRight > GamePanel.screenWidth)
         {
@@ -93,7 +113,7 @@ public class Ball implements GameObject{
                 y = 1000;
             }
         }
-        if (bTop < 0)
+        if (bTop < game.MARGIN)
         {
             ballSpeedY = -ballSpeedY;
         }
@@ -113,21 +133,7 @@ public class Ball implements GameObject{
 
         for (int i = 0; i < numBricks; i++) {
             if (bricks[i].getVisibility()) {
-                if (bRight >= bricks[i].getLeft() && bRight <= bricks[i].getRight() &&
-                        y >= bricks[i].getTop() && y <= bricks[i].getBottom()) {
-                    ballSpeedX = -ballSpeedX;
-                    score.addScore();
-                    bricks[i].setInvisible();
-                    break;
-
-                } else if (bLeft >= bricks[i].getLeft() && bLeft <= bricks[i].getRight() &&
-                        y >= bricks[i].getTop() && y <= bricks[i].getBottom()) {
-                    ballSpeedX = -ballSpeedX;
-                    score.addScore();
-                    bricks[i].setInvisible();
-                    break;
-
-                } else if (x >= bricks[i].getLeft() && x <= bricks[i].getRight() &&
+                if (x >= bricks[i].getLeft() && x <= bricks[i].getRight() &&
                         bTop >= bricks[i].getTop() && bTop <= bricks[i].getBottom()) {
                     ballSpeedY = -ballSpeedY;
                     score.addScore();
@@ -140,9 +146,25 @@ public class Ball implements GameObject{
                     bricks[i].setInvisible();
                     score.addScore();
                     break;
+                } else if (bRight >= bricks[i].getLeft() && bRight <= bricks[i].getRight() &&
+                        y >= bricks[i].getTop() && y <= bricks[i].getBottom()) {
+                    ballSpeedX = -ballSpeedX;
+                    score.addScore();
+                    bricks[i].setInvisible();
+                    break;
 
+                } else if (bLeft >= bricks[i].getLeft() && bLeft <= bricks[i].getRight() &&
+                        y >= bricks[i].getTop() && y <= bricks[i].getBottom()) {
+                    ballSpeedX = -ballSpeedX;
+                    score.addScore();
+                    bricks[i].setInvisible();
+                    break;
                 }
             }
+        }
+        if (Brick.numBricks == 0)
+        {
+            game.finishGame();
         }
     }
 }
