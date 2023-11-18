@@ -62,10 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main); //Will eventually display a menu...
 
-
-
-
-
         final Button button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -82,10 +78,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-
-
-        //setContentView(new MainMenu(this));
-        //setContentView(new GamePanel(this));
     }
 
     public void goToGame() {

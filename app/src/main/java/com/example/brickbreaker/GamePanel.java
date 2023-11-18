@@ -5,12 +5,14 @@ import static android.graphics.Color.RED;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Build;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -23,12 +25,15 @@ import android.widget.Button;
 *   This class is where all of the fun stuff happens!
 *   It creates all of the threads and objects seen on the screen!
 */
-public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
-    private MainThread thread;
+public class GamePanel extends View {
     private RectPlayer player;
     private Ball mainBall;
     private Point playerPoint;
     private Score playerScore = new Score();
+
+    Handler handler;
+    Runnable runnable;
+    final long UPDATE_MILLIS = 30;
     public static int screenHeight = 0;
     public static int screenWidth = 0;
     public static final int playerWidth = 400;
@@ -37,34 +42,36 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     boolean pause = true;
     boolean pause2 = true;
 
-    //private RectMenu rect;
     public Rect rec;
-
-    public Button button2;
-
-    //bricks
 
     Paint brickPaint = new Paint();
     int numBricks = 18;
     Brick[] bricks = new Brick[numBricks];
-    int brokenBricks = 0;
 
     MainActivity game;
 
     public GamePanel(Context context, MainActivity game){
         super(context);
+        this.game = game;
+        handler = new Handler();
+        runnable = new Runnable()
+        {
+            public void run()
+            {
+                invalidate();
+            }
+        };
 
         // Gets the dimensions of the screen
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
         GamePanel.screenHeight = displayMetrics.heightPixels;
         GamePanel.screenWidth = displayMetrics.widthPixels;
+
         brickPaint.setColor(1);
+
         createBricks();
-
-        getHolder().addCallback(this);
-
-        thread = new MainThread(getHolder(), this);
 
         player = new RectPlayer(new Rect(0, 0, this.playerWidth, this.playerHeight), Color.rgb(255,0,0));
 
@@ -72,72 +79,18 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         playerPoint = player.setPoint(this.screenHeight, this.screenWidth);
 
-        Button button2 = new Button(context);
-
         setFocusable(true);
 
         rec = new Rect(screenWidth-100,0,screenWidth,100);
 
-//<<<<<<< HEAD
-//
-//>>>>>>> c1fae7480fe842b8525d6d7903729b80a2a7ddf0
+        update();
     }
 
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
-    {
-    }
-    @Override
-    public void surfaceCreated(SurfaceHolder holder)
-    {
-        thread = new MainThread(getHolder(), this);
-
-
-
-        thread.setRunning(true);
-        thread.start();
-    }
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder)
-    {
-        boolean retry = true;
-        while(true)
-        {
-            try
-            {
-                thread.setRunning(false);
-                thread.join();
-            }catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-            retry = false;
-        }
-    }
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
-
-
         float x = event.getX();
         float y = event.getY();
-
-//        if(pause2 == false && x > screenWidth-100 && y < 100) {
-//            pause = true;
-//            mainBall.SetSpeed();
-//        }
-//        if(x > screenWidth-100 && y < 100) {
-//            if(pause == true) {
-//                mainBall.GetSpeed();
-//                pause = false;
-//                pause2= false;
-//
-//            } else if(pause2 == false && x > screenWidth-100 && y < 100) {
-//                pause = true;
-//                pause2 = true;
-//                mainBall.SetSpeed();
-//            }
-
 
         switch (event.getAction())
         {
@@ -169,17 +122,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         return true;
         //return super.onTouchEvent(event);
     }
-    public void update() throws InterruptedException {
+    public void update(){
         player.update(playerPoint);
-        mainBall.update(player, thread, playerScore);
+        mainBall.update(player, this, playerScore);
         mainBall.update(bricks,numBricks, playerScore);
     }
 
     @Override
-    public void draw(Canvas canvas )
+    public void onDraw(Canvas canvas )
     {
-        super.draw(canvas);
-
+        update();
+        super.onDraw(canvas);
         Paint paint = new Paint();
         paint.setTextSize(44);
         paint.setColor(Color.argb(255,0,0,255));
@@ -196,7 +149,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         int lives = 3;
 
         canvas.drawText("Score: " + playerScore.getScore() + "   Lives: " + playerScore.getLives(), 10, 50, paint);
-        //Button button2 = new Button(this.getContext()); // "this" refers to the current Activity's context
 
         paint = new Paint();
         paint.setColor(RED);
@@ -204,13 +156,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 
         canvas.drawRect(rec, paint);
-
-//<<<<<<< HEAD
-//=======
-//
-//
-//
-//>>>>>>> 5f979daf4b3cab8c90df3d67a8cb4b0839aadc2b
+        handler.postDelayed(runnable, UPDATE_MILLIS);
     }
 
     private void addContentView(Button button2, ViewGroup.LayoutParams layoutParams) {
@@ -230,5 +176,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
-
+    public void finishGame()
+    {
+        getHandler().removeCallbacksAndMessages(null);
+        Intent intent = new Intent(getContext(), GameOver.class);
+        intent.putExtra("points", playerScore.getScore());
+        game.finish();
+        getContext().startActivity(intent);
+        ((Activity) getContext()).finish();
+    }
 }

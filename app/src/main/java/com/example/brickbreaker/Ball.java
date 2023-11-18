@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
+import android.os.SystemClock;
 
 public class Ball implements GameObject{
     private int radius;
@@ -47,7 +48,7 @@ public class Ball implements GameObject{
 
     }
 
-    public void update(RectPlayer player, MainThread thread, Score score) throws InterruptedException {
+    public void update(RectPlayer player, GamePanel game, Score score){
         int left = player.getLeftSide();
         int right = player.getRightSide();
         int bottom = player.getBottomSide();
@@ -79,14 +80,14 @@ public class Ball implements GameObject{
         if (bBottom > GamePanel.screenHeight)
         {
             ballSpeedY = -ballSpeedY;
-            //thread.setRunning(false);
+
             score.lostLife();
-            if(score.getLives() == 0){
-                thread.setRunning(false);
+            if(score.getLives() <= 0){
+                game.finishGame();
             }
             else{
                 try{
-                    thread.sleep(3000);
+                    SystemClock.sleep(3000);
                 }catch(Exception e){e.printStackTrace();}
                 x = (int) (Math.random() * (800 - 400)) + 400;
                 y = 1000;
@@ -143,11 +144,5 @@ public class Ball implements GameObject{
                 }
             }
         }
-    }
-
-
-
-    public int getRadius(){
-        return radius;
     }
 }
