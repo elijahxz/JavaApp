@@ -67,13 +67,13 @@ public class Ball implements GameObject{
         }
         else {
             // A hit on the paddle
-            if (bRight - (radius * .6) >= left && bRight - (radius * .6) <= left + 20 && bBottom > top && bBottom < bottom) {
+            if (bRight - (radius * .7) >= left && bRight - (radius * .7) <= left + 20 && bBottom > top && bBottom < bottom) {
                 if (ballSpeedX > 0) {
                     ballSpeedX = -ballSpeedX;
                 }
                 ballSpeedY = -ballSpeedY;
                 paddleUpdated = 10;
-            } else if (bLeft + (radius * .6) >= right && bLeft + (radius * .6) <= right + 20 && bBottom > top && bBottom < bottom) {
+            } else if (bLeft + (radius * .7) >= right && bLeft + (radius * .7) <= right + 20 && bBottom > top && bBottom < bottom) {
                 if (ballSpeedX < 0) {
                     ballSpeedX = -ballSpeedX;
                 }
