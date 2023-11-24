@@ -67,31 +67,19 @@ public class Ball implements GameObject{
         }
         else {
             // A hit on the paddle
-            if (bRight - (radius * .8) >= left && bRight - (radius * .8) <= left + 20 && bBottom > top && bBottom < bottom) {
+            if (bRight - (radius * .7) >= left && bRight - (radius * .7) <= left + 20 && bBottom > top && bBottom < bottom) {
                 if (ballSpeedX > 0) {
                     ballSpeedX = -ballSpeedX;
                 }
                 ballSpeedY = -ballSpeedY;
-                paddleUpdated = 20;
-            }
-            else if (bLeft + (radius * .8) >= right && bLeft + (radius * .8) <= right + 20 && bBottom > top && bBottom < bottom) {
+                paddleUpdated = 10;
+            } else if (bLeft + (radius * .7) >= right && bLeft + (radius * .7) <= right + 20 && bBottom > top && bBottom < bottom) {
                 if (ballSpeedX < 0) {
                     ballSpeedX = -ballSpeedX;
                 }
                 ballSpeedY = -ballSpeedY;
-                paddleUpdated = 20;
-            }
-            else if (bRight >= left && bRight <= right &&
-                y >= top && y <= bottom) {
-                ballSpeedX = -ballSpeedX;
-                paddleUpdated = 20;
-            }
-            else if (bLeft >= left && bLeft <= right &&
-                    y >= top && y <= bottom) {
-                ballSpeedX = -ballSpeedX;
-                paddleUpdated = 20;
-            }
-            else if (bBottom > top && bBottom < bottom && x > left && x < right) {
+                paddleUpdated = 10;
+            } else if (bBottom > top && bBottom < bottom && x > left && x < right) {
                 ballSpeedY = -ballSpeedY;
                 if (!(ballSpeedX > 40 || ballSpeedX < -40)) {
                     ballSpeedX *= 1.1;
@@ -101,7 +89,7 @@ public class Ball implements GameObject{
                     ballSpeedY *= 1.1;
                     ballSpeedY *= 1.1;
                 }
-                paddleUpdated = 20;
+                paddleUpdated = 10;
             }
         }
         // Checks to see if the ball is interacting with the screen.

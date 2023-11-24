@@ -13,6 +13,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -20,6 +21,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.media.MediaPlayer;
 
 /*
 *   This class is where all of the fun stuff happens!
@@ -41,6 +43,7 @@ public class GamePanel extends View {
     public static final int playerHeight = 40;
     boolean pause = true;
     public Rect pauseButton;
+    private MediaPlayer startSound = MediaPlayer.create(getContext(), R.raw.startsound);
 
     Paint brickPaint = new Paint();
     int numBricks = 18;
@@ -48,7 +51,7 @@ public class GamePanel extends View {
 
     MainActivity game;
 
-    public GamePanel(Context context, MainActivity game){
+    public GamePanel(Context context, MainActivity game) /*throws InterruptedException*/ {
         super(context);
 
         this.game = game;
@@ -80,6 +83,13 @@ public class GamePanel extends View {
         playerPoint = player.setPoint(this.screenHeight, this.screenWidth);
 
         setFocusable(true);
+
+        if(startSound.isPlaying())
+            startSound.stop();
+        else
+            startSound.start();
+
+        SystemClock.sleep(3000);
 
         pauseButton = new Rect(screenWidth-100,0,screenWidth,60);
     }
