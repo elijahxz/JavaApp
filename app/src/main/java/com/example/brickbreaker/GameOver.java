@@ -34,7 +34,7 @@ public class GameOver extends AppCompatActivity {
         final Button button1 = findViewById(R.id.button_exit);
         button1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                System.exit(0);
+                System.exit(1);
             }
 
         });
