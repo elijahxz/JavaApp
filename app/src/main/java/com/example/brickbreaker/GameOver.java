@@ -1,5 +1,7 @@
 package com.example.brickbreaker;
 
+import static android.graphics.Color.BLACK;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
