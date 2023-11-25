@@ -207,6 +207,8 @@ public class GamePanel extends View {
         getHandler().removeCallbacksAndMessages(null);
         Intent intent = new Intent(getContext(), GameOver.class);
         intent.putExtra("points", playerScore.getScore());
+
+        //Win and loss sounds
         if(playerScore.getScore() >= 170){
             if(winSound.isPlaying())
                 winSound.seekTo(0);
@@ -219,6 +221,7 @@ public class GamePanel extends View {
             else
                 gameOverSound.start();
         }
+
         game.finish();
         getContext().startActivity(intent);
         ((Activity) getContext()).finish();
