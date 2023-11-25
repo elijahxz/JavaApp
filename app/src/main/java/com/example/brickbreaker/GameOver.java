@@ -38,15 +38,30 @@ public class GameOver extends AppCompatActivity {
         }
 
 
-        final Button button = findViewById(R.id.button_main_menu);
+        final Button button = findViewById(R.id.button_main_menu_loss);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 restart_game();
             }
 
         });
-        final Button button1 = findViewById(R.id.button_exit);
+        final Button button1 = findViewById(R.id.button_exit_loss);
         button1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                System.exit(1);
+            }
+
+        });
+
+        final Button button3 = findViewById(R.id.button_main_menu_win);
+        button3.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                restart_game();
+            }
+
+        });
+        final Button button4 = findViewById(R.id.button_exit_win);
+        button4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 System.exit(1);
             }
