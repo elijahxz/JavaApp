@@ -46,7 +46,7 @@ public class GamePanel extends View {
     public static final int playerHeight = 40;
     boolean pause = true;
     public Rect pauseButton;
-    private MediaPlayer startSound = MediaPlayer.create(getContext(), R.raw.startsound);
+    private MediaPlayer startSound = MediaPlayer.create(getContext(), R.raw.startsound); //Sounds
     private MediaPlayer paddleSound = MediaPlayer.create(getContext(), R.raw.paddlehit);
     private MediaPlayer deathSound = MediaPlayer.create(getContext(), R.raw.deathsound);
     private MediaPlayer wallSound = MediaPlayer.create(getContext(), R.raw.wallhit);

@@ -54,6 +54,7 @@ public class Ball implements GameObject{
 
     }
 
+    //Has Sounds
     public void update(RectPlayer player, GamePanel game, Score score, MediaPlayer paddle, MediaPlayer wall, MediaPlayer death) {
         int left = player.getLeftSide();
         int right = player.getRightSide();
