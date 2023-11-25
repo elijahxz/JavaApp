@@ -13,13 +13,19 @@ import android.view.MotionEvent;
     slider (paddle) at the bottom of the screen.
 */
 public class RectPlayer implements GameObject{
-    public static final int playerWidth = 400;
-    public static final int playerHeight = 40;
-    private Rect rectangle;
+    public static final int playerWidth = 400;  // Width of paddle
+    public static final int playerHeight = 40;  // Height of paddle
+    private Rect rectangle;     // Rectangle object for paddle
     private int color;
+
+    // Value to check if paddle is being moved by player
     private boolean initialization = true, playerTouch = false;
+
+    // Coordinates for sides of paddle
     private int leftSide, rightSide, offsetX;
     private int PLAYER_LOCK_Y;
+
+    // Constructor
     public RectPlayer(Rect rectangle, int color)
     {
         this.rectangle = rectangle;
@@ -32,11 +38,14 @@ public class RectPlayer implements GameObject{
     {
         int x=0, y=0;
 
+        // Get center of screen for rectangle spawn
         x = (width/2);
         y = height - (this.playerHeight/2) - 100;
 
+        // Finalize Y value
         this.PLAYER_LOCK_Y = y;
 
+        // Get right and left side.
         leftSide = x - rectangle.width()/2;
         rightSide = x + rectangle.width()/2;
 
@@ -61,6 +70,7 @@ public class RectPlayer implements GameObject{
      */
     public void update(Point point)
     {
+        // Check if the rectangle is being moved
         if (playerTouch == false )
         {
             if (initialization == true)

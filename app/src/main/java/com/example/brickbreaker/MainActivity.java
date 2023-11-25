@@ -19,37 +19,6 @@ import android.widget.Toast;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_item, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        if(item.getItemId() == R.id.settings){
-            Toast.makeText(this, "You have clicked on settings...", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        else if(item.getItemId() == R.id.aboutus){
-            Toast.makeText(this, "You have clicked on about us...", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        else if(item.getItemId() == R.id.share){
-            Toast.makeText(this, "You have clicked on share...", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        else if(item.getItemId() == R.id.logout){
-            Toast.makeText(this, "You have clicked on logout...", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        else {
-            return super.onOptionsItemSelected(item);
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,28 +27,31 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        // This starts the game.
+        // Display main menu by setting content view.
+        setContentView(R.layout.activity_main);
 
-        setContentView(R.layout.activity_main); //Will eventually display a menu...
-
+        // Create button to start the game
         final Button button = findViewById(R.id.button);
+
+        // Make butotn call goToGame() function,
+        // which changes content view.
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                goToGame();
             }
-
         });
 
-
+        // Create button to close the app entirely.
         final Button button2 = findViewById(R.id.button2);
         button2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 System.exit(0);
             }
-
         });
     }
 
+    // Set the content view by creating our main
+    // game panel and switching it to that.
     public void goToGame() {
         setContentView(new GamePanel(this, this));
     }
