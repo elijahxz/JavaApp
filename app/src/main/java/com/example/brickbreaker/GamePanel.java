@@ -2,6 +2,7 @@ package com.example.brickbreaker;
 import static android.graphics.Color.BLACK;
 import static android.graphics.Color.BLUE;
 import static android.graphics.Color.RED;
+import static android.graphics.Color.WHITE;
 
 import android.app.Activity;
 import android.content.Context;
@@ -151,7 +152,7 @@ public class GamePanel extends View {
         super.onDraw(canvas);
         Paint paint = new Paint();
         paint.setTextSize(44);
-        paint.setColor(Color.argb(255,0,0,0));
+        paint.setColor(Color.argb(255,0,255,0));
 
         canvas.drawColor(BLACK);
 
