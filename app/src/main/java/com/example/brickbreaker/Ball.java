@@ -133,10 +133,12 @@ public class Ball implements GameObject{
 
             score.lostLife();
 
-            if(death.isPlaying())
-                death.seekTo(0);
-            else {
-                death.start();
+            if(score.getLives() != 0) {
+                if (death.isPlaying())
+                    death.seekTo(0);
+                else {
+                    death.start();
+                }
             }
 
             if(score.getLives() <= 0){

@@ -51,6 +51,8 @@ public class GamePanel extends View {
     private MediaPlayer deathSound = MediaPlayer.create(getContext(), R.raw.deathsound);
     private MediaPlayer wallSound = MediaPlayer.create(getContext(), R.raw.wallhit);
     private MediaPlayer hitSound = MediaPlayer.create(getContext(), R.raw.hitsound);
+    private MediaPlayer gameOverSound = MediaPlayer.create(getContext(), R.raw.gameoversound);
+    private MediaPlayer winSound = MediaPlayer.create(getContext(), R.raw.winsound);
 
     Paint brickPaint = new Paint();
     int numBricks = 18;
@@ -205,6 +207,18 @@ public class GamePanel extends View {
         getHandler().removeCallbacksAndMessages(null);
         Intent intent = new Intent(getContext(), GameOver.class);
         intent.putExtra("points", playerScore.getScore());
+        if(playerScore.getScore() >= 170){
+            if(winSound.isPlaying())
+                winSound.seekTo(0);
+            else
+                winSound.start();
+        }
+        else{
+            if(gameOverSound.isPlaying())
+                gameOverSound.seekTo(0);
+            else
+                gameOverSound.start();
+        }
         game.finish();
         getContext().startActivity(intent);
         ((Activity) getContext()).finish();
