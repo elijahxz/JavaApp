@@ -2,6 +2,7 @@ package com.example.brickbreaker;
 import static android.graphics.Color.BLACK;
 import static android.graphics.Color.BLUE;
 import static android.graphics.Color.RED;
+import static android.graphics.Color.WHITE;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,7 +22,9 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import android.media.MediaPlayer;
+import android.widget.TextView;
 
 /*
 *   This class is where all of the fun stuff happens!
@@ -149,9 +152,9 @@ public class GamePanel extends View {
         super.onDraw(canvas);
         Paint paint = new Paint();
         paint.setTextSize(44);
-        paint.setColor(Color.argb(255,0,0,255));
+        paint.setColor(Color.argb(255,0,0,0));
 
-        canvas.drawColor(Color.WHITE);
+        canvas.drawColor(Color.parseColor("#5c7556"));
 
         player.draw(canvas);
         mainBall.draw(canvas);
@@ -161,13 +164,20 @@ public class GamePanel extends View {
 
         int score = 0;
         int lives = 3;
-
         canvas.drawText("Score: " + playerScore.getScore() + "   Lives: " + playerScore.getLives(), 10, 50, paint);
 
+
         paint = new Paint();
-        paint.setColor(RED);
+        paint.setColor(BLACK);
 
         canvas.drawRect(pauseButton, paint);
+
+        paint = new Paint();
+        paint.setColor(WHITE);
+        paint.setTextSize(50);
+
+        canvas.drawText("| |", screenWidth-65 , 45, paint);
+
         handler.postDelayed(runnable, UPDATE_MILLIS);
     }
 
