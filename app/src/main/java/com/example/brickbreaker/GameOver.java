@@ -19,10 +19,22 @@ public class GameOver extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Show the game over screen
-        setContentView(R.layout.game_over); //Will eventually display a menu...
+        int pointsEarned = (int)getIntent().getExtras().get("points");
 
-        TextView points = findViewById(R.id.points_holder);
-        points.setText("Score: " + getIntent().getExtras().get("points"));
+        if (pointsEarned >= 170) {
+            setContentView(R.layout.win_screen);
+            TextView pointsWin = findViewById(R.id.points_holderWin);
+            if (pointsEarned == 180)
+                pointsWin.setText("Score: " + pointsEarned + " Perfect");
+            else
+                pointsWin.setText("Score: " + pointsEarned + "\nTry Again!\n180 is Perfect");
+        }
+        else {
+            setContentView(R.layout.game_over); //Will eventually display a menu...
+            TextView pointsLoss = findViewById(R.id.points_holderLoss);
+            pointsLoss.setText("Score: " + pointsEarned);
+        }
+
 
         final Button button = findViewById(R.id.button_main_menu);
         button.setOnClickListener(new View.OnClickListener() {

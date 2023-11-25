@@ -137,7 +137,7 @@ public class GamePanel extends View {
         paint.setTextSize(44);
         paint.setColor(Color.argb(255,0,0,255));
 
-        canvas.drawColor(Color.WHITE);
+        canvas.drawColor(BLACK);
 
         player.draw(canvas);
         mainBall.draw(canvas);
@@ -149,7 +149,6 @@ public class GamePanel extends View {
         int lives = 3;
 
         canvas.drawText("Score: " + playerScore.getScore() + "   Lives: " + playerScore.getLives(), 10, 50, paint);
-
         paint = new Paint();
         paint.setColor(RED);
 

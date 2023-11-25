@@ -1,6 +1,10 @@
 package com.example.brickbreaker;
 
 import static android.graphics.Color.BLACK;
+import static android.graphics.Color.BLUE;
+import static android.graphics.Color.GREEN;
+import static android.graphics.Color.RED;
+import static android.graphics.Color.YELLOW;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -36,7 +40,20 @@ public class Brick implements GameObject{
             return;
         }
         Paint paint = new Paint();
-        paint.setColor(BLACK);
+
+        int randomColor = (int) ((Math.random() * (4 - 0)) + 0);
+
+
+        if(randomColor == 0)
+            paint.setColor(YELLOW);
+        if(randomColor == 1)
+            paint.setColor(RED);
+        if(randomColor == 2)
+            paint.setColor(GREEN);
+        if(randomColor == 3)
+            paint.setColor(BLUE);
+        if(randomColor == 4)
+            paint.setColor(BLACK);
 
         left = 40 + (20 * column) + (width * column);
         top = 70 + (20 * row) + (height  * row);
@@ -48,7 +65,6 @@ public class Brick implements GameObject{
                 (right),
                 (bottom),
                 paint);
-
     }
 
     public int getTop() {
