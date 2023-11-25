@@ -40,9 +40,8 @@ public class GameOver extends AppCompatActivity {
             final Button button4 = findViewById(R.id.button_exit_win);
             button4.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    System.exit(1);
+                    finishAffinity();
                 }
-
             });
         }
         else {
@@ -54,14 +53,12 @@ public class GameOver extends AppCompatActivity {
                 public void onClick(View v) {
                     restart_game();
                 }
-
             });
             final Button button1 = findViewById(R.id.button_exit_loss);
             button1.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    System.exit(1);
+                    finishAffinity();
                 }
-
             });
         }
     }
