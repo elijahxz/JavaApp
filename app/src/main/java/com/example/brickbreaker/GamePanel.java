@@ -28,14 +28,13 @@ import android.widget.TextView;
 
 /*
 *   This class is where all of the fun stuff happens!
-*   It creates all of the threads and objects seen on the screen!
+*   It creates all objects seen on the screen!
 */
 public class GamePanel extends View {
     private RectPlayer player;
     private Ball mainBall;
     private Point playerPoint;
     private Score playerScore = new Score();
-
     Handler handler;
     Runnable runnable;
     private final long UPDATE_MILLIS = 30;
@@ -60,11 +59,15 @@ public class GamePanel extends View {
 
     MainActivity game;
 
-    public GamePanel(Context context, MainActivity game) /*throws InterruptedException*/ {
+    // Only constructor used for this class.
+    // It does quite a bit of setup.
+    public GamePanel(Context context, MainActivity game) {
         super(context);
 
+        // Set the main activity so we can use it later
         this.game = game;
 
+        // This starts the game. We pulled this from a youtube video. It works like a thread.
         handler = new Handler();
         runnable = new Runnable()
         {
@@ -78,49 +81,60 @@ public class GamePanel extends View {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
+        // Set the screen dimensions as a static variable
         GamePanel.screenHeight = displayMetrics.heightPixels;
         GamePanel.screenWidth = displayMetrics.widthPixels;
 
-        brickPaint.setColor(1);
-
+        // Creates the bricks seen on the screen.
         createBricks();
 
+        // Creates the paddle at the bottom of the screen.
         player = new RectPlayer(new Rect(0, 0, this.playerWidth, this.playerHeight), Color.rgb(255,0,0));
 
+        // Creates the ball.
         mainBall = new Ball(50, Color.rgb(255,0,0), this);
 
+        // Sets the paddles player point.
         playerPoint = player.setPoint(this.screenHeight, this.screenWidth);
 
+        // setFocusable mainly used for enable/disable view's focus event on both touch mode and keypad mode( using up/down/next key).
         setFocusable(true);
 
+        // The the game sound start up
         if(startSound.isPlaying())
             startSound.stop();
         else
             startSound.start();
 
+        // Set the game to sleep for three seconds in order to let the game startup sound to play
         SystemClock.sleep(3000);
 
+        // Create the pause button
         pauseButton = new Rect(screenWidth-100,0,screenWidth,60);
     }
 
+    // This is what controls what happens when the user touches the screen.
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
+        // Get the players touch coords.
         float x = event.getX();
         float y = event.getY();
 
+        // Check to see what the user is trying to do
         switch (event.getAction())
         {
+            // Similar to OnClick
             case MotionEvent.ACTION_DOWN:
-                // this calls the movement for the paddle
+                // This calls the movement for the paddle
                 player.touchWrapper(event, playerPoint, 0);
 
                 // This works the pause menu
                 if(x > pauseButton.left && y < pauseButton.bottom) {
                     if(pause == true) {
-                        mainBall.GetSpeed();
                         pause = false;
-
+                        mainBall.GetSpeed();
+                        mainBall.GetSpeed();
                     }
                     else if(pause == false && x > pauseButton.left && y < pauseButton.bottom) {
                         pause = true;
@@ -128,10 +142,14 @@ public class GamePanel extends View {
                     }
                 }
                 break;
+            // States that the user is attempting to slide their finger across the screen
+            // We should only move the paddle in this case
             case MotionEvent.ACTION_MOVE:
                 //This calls the movement for the paddle
                 player.touchWrapper(event, playerPoint, 1);
                 break;
+
+            // On any of these cases, the user is releasing/not touching the screen.
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_POINTER_UP:
@@ -139,55 +157,61 @@ public class GamePanel extends View {
                 break;
         }
         return true;
-        //return super.onTouchEvent(event);
     }
+    // Update the player, and ball
     public void update(){
         player.update(playerPoint);
+
+        // This method updates the ball if it is touching the paddle or the walls
         mainBall.update(player, this, playerScore, paddleSound, wallSound, deathSound);
+
+        // This method upated the ball if it is touching a brick
         mainBall.update(bricks,numBricks, playerScore, hitSound);
     }
 
+    // This draws all of the objects onto the screen.
     @Override
     public void onDraw(Canvas canvas )
     {
+        // First, call the update method before we draw anything
         update();
-        super.onDraw(canvas);
-        Paint paint = new Paint();
-        paint.setTextSize(44);
-        paint.setColor(Color.argb(255,0,255,0));
 
+        // Call the superclass.
+        super.onDraw(canvas);
+
+        // Set the background as black
         canvas.drawColor(BLACK);
 
+        // Call the player, ball, and brick draw methods
         player.draw(canvas);
         mainBall.draw(canvas);
         for (int i = 0; i < numBricks; i ++) {
             bricks[i].draw(canvas);
         }
 
-        int score = 0;
-        int lives = 3;
-
+        // Draw the scoreboard
+        Paint paint = new Paint();
+        paint.setTextSize(44);
+        paint.setColor(Color.argb(255,0,255,0));
         canvas.drawText("Score: " + playerScore.getScore() + "   Lives: " + playerScore.getLives(), 10, 50, paint);
 
-
+        // Draw the pause button
         paint = new Paint();
         paint.setColor(RED);
-
         canvas.drawRect(pauseButton, paint);
 
+        // Draw the || on the pause button.
         paint = new Paint();
         paint.setColor(WHITE);
         paint.setTextSize(50);
 
         canvas.drawText("| |", screenWidth-65 , 45, paint);
 
+        // Not sure what exactly this does, it was also on the youtube video we watched
         handler.postDelayed(runnable, UPDATE_MILLIS);
     }
 
-    private void addContentView(Button button2, ViewGroup.LayoutParams layoutParams) {
-    }
-
-    //added
+    // Create and initialize the bricks
     private void createBricks() {
         int brickWidth = 2400/16;
         int brickHeight = 1600/16;
@@ -199,22 +223,24 @@ public class GamePanel extends View {
             }
         }
         Brick.numBricks = numBricks;
-
     }
 
+    // This finishes the game and goes to the GameOver class
     public void finishGame()
     {
+        // We found this on stack overflow and youtube.
         getHandler().removeCallbacksAndMessages(null);
         Intent intent = new Intent(getContext(), GameOver.class);
         intent.putExtra("points", playerScore.getScore());
 
-        //Win and loss sounds
+        // If the score is over 170, that's a win
         if(playerScore.getScore() >= 170){
             if(winSound.isPlaying())
                 winSound.seekTo(0);
             else
                 winSound.start();
         }
+        // If it is under 170, its a loss
         else{
             if(gameOverSound.isPlaying())
                 gameOverSound.seekTo(0);
@@ -222,8 +248,13 @@ public class GamePanel extends View {
                 gameOverSound.start();
         }
 
+        // Finish MainActivity
         game.finish();
+
+        // Start GameOver
         getContext().startActivity(intent);
+
+        // Finish GamePanel
         ((Activity) getContext()).finish();
     }
 }
