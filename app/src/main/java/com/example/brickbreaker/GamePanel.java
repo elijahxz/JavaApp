@@ -13,6 +13,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -20,6 +21,9 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import android.media.MediaPlayer;
+import android.widget.TextView;
 
 /*
 *   This class is where all of the fun stuff happens!
@@ -41,6 +45,11 @@ public class GamePanel extends View {
     public static final int playerHeight = 40;
     boolean pause = true;
     public Rect pauseButton;
+    private MediaPlayer startSound = MediaPlayer.create(getContext(), R.raw.startsound); //Sounds
+    private MediaPlayer paddleSound = MediaPlayer.create(getContext(), R.raw.paddlehit);
+    private MediaPlayer deathSound = MediaPlayer.create(getContext(), R.raw.deathsound);
+    private MediaPlayer wallSound = MediaPlayer.create(getContext(), R.raw.wallhit);
+    private MediaPlayer hitSound = MediaPlayer.create(getContext(), R.raw.hitsound);
 
     Paint brickPaint = new Paint();
     int numBricks = 18;
@@ -48,7 +57,7 @@ public class GamePanel extends View {
 
     MainActivity game;
 
-    public GamePanel(Context context, MainActivity game){
+    public GamePanel(Context context, MainActivity game) /*throws InterruptedException*/ {
         super(context);
 
         this.game = game;
@@ -80,6 +89,13 @@ public class GamePanel extends View {
         playerPoint = player.setPoint(this.screenHeight, this.screenWidth);
 
         setFocusable(true);
+
+        if(startSound.isPlaying())
+            startSound.stop();
+        else
+            startSound.start();
+
+        SystemClock.sleep(3000);
 
         pauseButton = new Rect(screenWidth-100,0,screenWidth,60);
     }
@@ -124,8 +140,8 @@ public class GamePanel extends View {
     }
     public void update(){
         player.update(playerPoint);
-        mainBall.update(player, this, playerScore);
-        mainBall.update(bricks,numBricks, playerScore);
+        mainBall.update(player, this, playerScore, paddleSound, wallSound, deathSound);
+        mainBall.update(bricks,numBricks, playerScore, hitSound);
     }
 
     @Override
@@ -135,7 +151,7 @@ public class GamePanel extends View {
         super.onDraw(canvas);
         Paint paint = new Paint();
         paint.setTextSize(44);
-        paint.setColor(Color.argb(255,0,0,255));
+        paint.setColor(Color.argb(255,0,0,0));
 
         canvas.drawColor(BLACK);
 
@@ -149,10 +165,19 @@ public class GamePanel extends View {
         int lives = 3;
 
         canvas.drawText("Score: " + playerScore.getScore() + "   Lives: " + playerScore.getLives(), 10, 50, paint);
+
+
         paint = new Paint();
         paint.setColor(RED);
 
         canvas.drawRect(pauseButton, paint);
+
+        paint = new Paint();
+        paint.setColor(WHITE);
+        paint.setTextSize(50);
+
+        canvas.drawText("| |", screenWidth-65 , 45, paint);
+
         handler.postDelayed(runnable, UPDATE_MILLIS);
     }
 

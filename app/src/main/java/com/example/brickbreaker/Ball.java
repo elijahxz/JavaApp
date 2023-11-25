@@ -7,6 +7,8 @@ import android.media.MediaPlayer;
 import android.os.SystemClock;
 import android.provider.MediaStore;
 
+import java.io.IOException;
+
 public class Ball implements GameObject{
     private int radius;
     private int color;

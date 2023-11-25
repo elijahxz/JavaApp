@@ -1,5 +1,7 @@
 package com.example.brickbreaker;
 
+import static android.graphics.Color.BLACK;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -46,7 +48,7 @@ public class GameOver extends AppCompatActivity {
         final Button button1 = findViewById(R.id.button_exit);
         button1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                System.exit(0);
+                System.exit(1);
             }
 
         });
