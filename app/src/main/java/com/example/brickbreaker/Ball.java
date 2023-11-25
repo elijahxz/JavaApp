@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.os.SystemClock;
+import android.provider.MediaStore;
 
 public class Ball implements GameObject{
     private int radius;
@@ -52,7 +53,8 @@ public class Ball implements GameObject{
 
     }
 
-    public void update(RectPlayer player, GamePanel game, Score score){
+    //Has Sounds
+    public void update(RectPlayer player, GamePanel game, Score score, MediaPlayer paddle, MediaPlayer wall, MediaPlayer death) {
         int left = player.getLeftSide();
         int right = player.getRightSide();
         int bottom = player.getBottomSide();
@@ -66,20 +68,38 @@ public class Ball implements GameObject{
             paddleUpdated --;
         }
         else {
-            // A hit on the paddle
-            if (bRight - (radius * .6) >= left && bRight - (radius * .6) <= left + 20 && bBottom > top && bBottom < bottom) {
+           //A hit on the paddle
+            if (bRight - (radius * .8) >= left && bRight - (radius * .8) <= left + 20 && bBottom > top && bBottom < bottom) {
                 if (ballSpeedX > 0) {
                     ballSpeedX = -ballSpeedX;
                 }
                 ballSpeedY = -ballSpeedY;
-                paddleUpdated = 10;
-            } else if (bLeft + (radius * .6) >= right && bLeft + (radius * .6) <= right + 20 && bBottom > top && bBottom < bottom) {
+                paddleUpdated = 20;
+
+                triggerPaddleSound(paddle);
+
+            }
+            else if (bLeft + (radius * .8) >= right && bLeft + (radius * .8) <= right + 20 && bBottom > top && bBottom < bottom) {
                 if (ballSpeedX < 0) {
                     ballSpeedX = -ballSpeedX;
                 }
                 ballSpeedY = -ballSpeedY;
-                paddleUpdated = 10;
-            } else if (bBottom > top && bBottom < bottom && x > left && x < right) {
+                paddleUpdated = 20;
+
+                triggerPaddleSound(paddle);
+
+            }
+            else if (bRight >= left && bRight <= right &&
+                    y >= top && y <= bottom) {
+                ballSpeedX = -ballSpeedX;
+                paddleUpdated = 20;
+            }
+            else if (bLeft >= left && bLeft <= right &&
+                    y >= top && y <= bottom) {
+                ballSpeedX = -ballSpeedX;
+                paddleUpdated = 20;
+            }
+            else if (bBottom > top && bBottom < bottom && x > left && x < right) {
                 ballSpeedY = -ballSpeedY;
                 if (!(ballSpeedX > 40 || ballSpeedX < -40)) {
                     ballSpeedX *= 1.1;
@@ -89,19 +109,34 @@ public class Ball implements GameObject{
                     ballSpeedY *= 1.1;
                     ballSpeedY *= 1.1;
                 }
-                paddleUpdated = 10;
+                paddleUpdated = 20;
+
+                triggerPaddleSound(paddle);
             }
         }
         // Checks to see if the ball is interacting with the screen.
         if (bRight > GamePanel.screenWidth)
         {
             ballSpeedX = -ballSpeedX;
+            if(wall.isPlaying()) {
+                wall.seekTo(0);
+            }
+            else {
+                wall.start();
+            }
         }
         if (bBottom > GamePanel.screenHeight)
         {
             ballSpeedY = -ballSpeedY;
 
             score.lostLife();
+
+            if(death.isPlaying())
+                death.seekTo(0);
+            else {
+                death.start();
+            }
+
             if(score.getLives() <= 0){
                 game.finishGame();
             }
@@ -116,16 +151,28 @@ public class Ball implements GameObject{
         if (bTop < game.MARGIN)
         {
             ballSpeedY = -ballSpeedY;
+            if(wall.isPlaying()) {
+                wall.seekTo(0);
+            }
+            else {
+                wall.start();
+            }
         }
         if (bLeft < 0){
             ballSpeedX = -ballSpeedX;
+            if(wall.isPlaying()) {
+                wall.seekTo(0);
+            }
+            else {
+                wall.start();
+            }
         }
 
         x += ballSpeedX;
         y += ballSpeedY;
     }
 
-    public void update(Brick bricks[], int numBricks, Score score) {
+    public void update(Brick bricks[], int numBricks, Score score, MediaPlayer hit) {
         int bLeft = x - radius;
         int bRight = x + radius;
         int bTop = y - radius;
@@ -136,6 +183,11 @@ public class Ball implements GameObject{
                 if (x >= bricks[i].getLeft() && x <= bricks[i].getRight() &&
                         bTop >= bricks[i].getTop() && bTop <= bricks[i].getBottom()) {
                     ballSpeedY = -ballSpeedY;
+                    if(hit.isPlaying())
+                        hit.seekTo(0);
+                    else
+                        hit.start();
+
                     score.addScore();
                     bricks[i].setInvisible();
                     break;
@@ -143,12 +195,22 @@ public class Ball implements GameObject{
                 } else if (x >= bricks[i].getLeft() && x <= bricks[i].getRight() &&
                         bBottom >= bricks[i].getTop() && bBottom <= bricks[i].getBottom()) {
                     ballSpeedY = -ballSpeedY;
+                    if(hit.isPlaying())
+                        hit.seekTo(0);
+                    else
+                        hit.start();
+
                     bricks[i].setInvisible();
                     score.addScore();
                     break;
                 } else if (bRight >= bricks[i].getLeft() && bRight <= bricks[i].getRight() &&
                         y >= bricks[i].getTop() && y <= bricks[i].getBottom()) {
                     ballSpeedX = -ballSpeedX;
+                    if(hit.isPlaying())
+                        hit.seekTo(0);
+                    else
+                        hit.start();
+
                     score.addScore();
                     bricks[i].setInvisible();
                     break;
@@ -156,6 +218,11 @@ public class Ball implements GameObject{
                 } else if (bLeft >= bricks[i].getLeft() && bLeft <= bricks[i].getRight() &&
                         y >= bricks[i].getTop() && y <= bricks[i].getBottom()) {
                     ballSpeedX = -ballSpeedX;
+                    if(hit.isPlaying())
+                        hit.seekTo(0);
+                    else
+                        hit.start();
+
                     score.addScore();
                     bricks[i].setInvisible();
                     break;
@@ -166,5 +233,12 @@ public class Ball implements GameObject{
         {
             game.finishGame();
         }
+    }
+    private void triggerPaddleSound(MediaPlayer paddle)
+    {
+        if(paddle.isPlaying())
+            paddle.seekTo(0);
+        else
+            paddle.start();
     }
 }
