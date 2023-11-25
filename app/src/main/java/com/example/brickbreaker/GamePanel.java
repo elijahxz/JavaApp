@@ -44,6 +44,10 @@ public class GamePanel extends View {
     boolean pause = true;
     public Rect pauseButton;
     private MediaPlayer startSound = MediaPlayer.create(getContext(), R.raw.startsound);
+    private MediaPlayer paddleSound = MediaPlayer.create(getContext(), R.raw.paddlehit);
+    private MediaPlayer deathSound = MediaPlayer.create(getContext(), R.raw.deathsound);
+    private MediaPlayer wallSound = MediaPlayer.create(getContext(), R.raw.wallhit);
+    private MediaPlayer hitSound = MediaPlayer.create(getContext(), R.raw.hitsound);
 
     Paint brickPaint = new Paint();
     int numBricks = 18;
@@ -134,8 +138,8 @@ public class GamePanel extends View {
     }
     public void update(){
         player.update(playerPoint);
-        mainBall.update(player, this, playerScore);
-        mainBall.update(bricks,numBricks, playerScore);
+        mainBall.update(player, this, playerScore, paddleSound, wallSound, deathSound);
+        mainBall.update(bricks,numBricks, playerScore, hitSound);
     }
 
     @Override
