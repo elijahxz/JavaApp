@@ -134,7 +134,6 @@ public class GamePanel extends View {
                     if(pause == true) {
                         pause = false;
                         mainBall.GetSpeed();
-                        mainBall.GetSpeed();
                     }
                     else if(pause == false && x > pauseButton.left && y < pauseButton.bottom) {
                         pause = true;
