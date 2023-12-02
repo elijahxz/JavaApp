@@ -10,6 +10,8 @@ Chris Witt
 Project: Brick Breaker Game
 -Classic Breakout/Brick Breaker style of game.
 
+Project Overview: https://mtmailmtsu-my.sharepoint.com/:p:/g/personal/eja3m_mtmail_mtsu_edu/ETjcbLKjQmxBgQbjHocGICEBTyf_YxS905tDiVrDcP46Mw?e=GDvXrm
+
 How to run it. 
 1. Install Andriod Studio onto your device: https://developer.android.com/studio
 2. Continue through all of the andriod studio installation steps (make sure to install Java). 
