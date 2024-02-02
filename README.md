@@ -1,11 +1,12 @@
 # JavaApp
-Fall 2023 CSCI 3033 Java app
 
 Authors:
 Elijah Atkins,
 Nick Bridges,
 Alec Creasy,
 Chris Witt
+
+This project was created for our Java course (CSCI 3033) at MTSU
 
 Project: Brick Breaker Game
 -Classic Breakout/Brick Breaker style of game.
